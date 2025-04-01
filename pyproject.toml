@@ -1,10 +1,10 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
 
 [project]
-version = "0.1.0"
-dynamic = ["version"]
+name = "proj"
+version = "0.0.1"
 
 authors = [
   { name="Example Author", email="author@example.com" },
