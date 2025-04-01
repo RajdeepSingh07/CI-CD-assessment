@@ -31,13 +31,10 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install build
-          pip3 install cloudsmith-cli
+          pip install setuptools wheel build cloudsmith-cli
 
       - name: Build package
-        run: python -m build
-        
+        run: python -m build --verbose
+
       - name: Upload artifact
         run: cloudsmith push python --api-key 95e54aaea50edd3f1841bda4fc3a1b3eaa6c545d workspace-for-rajdeep/ne dist/*.tar.gz
-
-      
