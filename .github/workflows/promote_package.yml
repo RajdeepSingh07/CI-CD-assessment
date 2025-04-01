@@ -15,18 +15,20 @@ env:
   CLOUDSMITH_SERVICE_SLUG: bot-wSY1
   PACKAGE_NAME: 'proj'
 
-permissions:
-  id-token: write
+permissions:  
+   id-token: write # This is required for requesting the JWT 
+   contents: read  # This is required for actions/checkout
 
 jobs:
   promote:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install Cloudsmith CLI
-        uses: cloudsmith-io/cloudsmith-cli-action@v1.0.1
+      - name: auth
+        uses: cloudsmith-io/cloudsmith-cli-action@v1.0.3
         with:
-          api-key: 95e54aaea50edd3f1841bda4fc3a1b3eaa6c545d
+              oidc-namespace: 'workspace-for-rajdeep'
+              oidc-service-slug: 'bot-wSY1'
 
       - name: Get package identifier and promote
         run: |
