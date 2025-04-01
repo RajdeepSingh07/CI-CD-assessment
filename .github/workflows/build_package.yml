@@ -37,4 +37,9 @@ jobs:
         run: python -m build --verbose
 
       - name: Upload artifact
-        run: cloudsmith push python --api-key 95e54aaea50edd3f1841bda4fc3a1b3eaa6c545d workspace-for-rajdeep/ne dist/*.tar.gz
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-package
+          path: dist/
+          if-no-files-found: error
+          retention-days: 5
