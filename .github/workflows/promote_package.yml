@@ -3,8 +3,11 @@ name: Promote Python Package
 on:
   workflow_dispatch:
     inputs:
-      event_type:
+      package_name:
         description: "Event type for package promotion"
+        required: true
+        type: string
+      package_version:
         required: true
         type: string
 
