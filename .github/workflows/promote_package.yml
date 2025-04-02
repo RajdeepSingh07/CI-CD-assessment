@@ -1,15 +1,8 @@
 name: Promote Python Package
 
 on:
-  workflow_dispatch:
-    inputs:
-      package_name:
-        description: "Package name for promotion"
-        required: true
-        type: string
-      package_version:
-        required: true
-        type: string
+  repository_dispatch:
+    types: [SYNCED]
 
 env:
   CLOUDSMITH_NAMESPACE: workspace-for-rajdeep
