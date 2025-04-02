@@ -27,8 +27,8 @@ jobs:
 
       - name: Tag Current Package as Ready-for-Production
         run: |
-          PACKAGE_NAME="${{ github.event.inputs.package_name }}"
-          PACKAGE_VERSION="${{ github.event.inputs.package_version }}"
+          PACKAGE_NAME="${{ github.event.client_payload.package_name }}"
+          PACKAGE_VERSION="${{ github.event.client_payload.package_version }}"
           
           echo "Tagging package $PACKAGE_NAME-$PACKAGE_VERSION as ready-for-production..."
           
