@@ -73,13 +73,6 @@ jobs:
 
           echo "Found packages for promotion:"
           echo "$IDENTIFIERS"
-
-          # Store identifiers for later use
-          echo "IDENTIFIERS=$IDENTIFIERS" >> $GITHUB_ENV
-        shell: bash
-
-      - name: Promote All Ready-for-Production Packages
-        run: |
           for ID in $IDENTIFIERS; do
             echo "Promoting package $ID to production..."
             cloudsmith mv --yes \
