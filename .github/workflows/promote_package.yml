@@ -52,7 +52,7 @@ jobs:
           echo "Found package identifier: $IDENTIFIER"
 
           # Tag the package
-          cloudsmith tag set $CLOUDSMITH_NAMESPACE/$CLOUDSMITH_STAGING_REPO/$IDENTIFIER ready-for-production
+          cloudsmith tag add $CLOUDSMITH_NAMESPACE/$CLOUDSMITH_STAGING_REPO/$IDENTIFIER ready-for-production
           echo "Tagged package $IDENTIFIER as ready-for-production."
           
           echo "IDENTIFIER=$IDENTIFIER" >> $GITHUB_ENV
