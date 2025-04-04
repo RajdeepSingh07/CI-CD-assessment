@@ -47,8 +47,8 @@ jobs:
       - name: Authenticate with Cloudsmith
         uses: cloudsmith-io/cloudsmith-cli-action@v1.0.3
         with:
-          oidc-namespace: ${{ workspace-for-rajdeep }}
-          oidc-service-slug: ${{  bot-wSY1 }}
+          oidc-namespace: "workspace-for-rajdeep"
+          oidc-service-slug: "bot-wSY1"
           
       - name: Push package to Cloudsmith
         run: |
