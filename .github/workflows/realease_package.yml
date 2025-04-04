@@ -56,5 +56,5 @@ jobs:
             echo "No package found to upload"
             exit 1
           fi
-           cloudsmith push python --api-key 95e54aaea50edd3f1841bda4fc3a1b3eaa6c545d workspace-for-rajdeep/ne dist/*.tar.gz
+           cloudsmith push python workspace-for-rajdeep/ne dist/*.tar.gz
         shell: bash
