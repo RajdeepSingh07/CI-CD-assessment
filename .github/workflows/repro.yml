@@ -12,20 +12,19 @@ jobs:
           username: "rajdeep-singh"
           password: "csa_9633b802283ea4ae6169027db8d319IRNlTQ"
 
-      - name: Push and Manifest
+      - name: Force Race Condition
         run: |
           export REPO=docker.cloudsmith.io/workspace-for-rajdeep/docker-test
-          export TAG=ui-repro-${{ github.run_id }}
+          export TAG=ui-repro-FAIL-${{ github.run_id }}
           export IMAGE=$REPO/backstage:$TAG
 
-          # 1. Push
+          # Pre-pull images so the push happens instantly without 'network pull' time
           docker pull --platform linux/amd64 alpine:latest
-          docker tag alpine:latest $IMAGE-amd64
-          docker push $IMAGE-amd64
-
           docker pull --platform linux/arm64 alpine:latest
-          docker tag alpine:latest $IMAGE-arm64
-          docker push $IMAGE-arm64
 
-          # 2. Manifest (The failing part)
+          # RUN THESE IN A SINGLE BURST
+          docker tag alpine:latest $IMAGE-amd64 && \
+          docker push $IMAGE-amd64 && \
+          docker tag alpine:latest $IMAGE-arm64 && \
+          docker push $IMAGE-arm64 && \
           docker manifest create $IMAGE --amend $IMAGE-amd64 --amend $IMAGE-arm64
