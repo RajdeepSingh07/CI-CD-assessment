@@ -9,7 +9,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: docker.cloudsmith.io
-          username: "workspace-for-rajdeep/docker-test"
+          username: "rajdeep-singh"
           password: "csa_9633b802283ea4ae6169027db8d319IRNlTQ"
 
       - name: Push and Manifest
