@@ -17,6 +17,7 @@ jobs:
         with:
           oidc-namespace: 'workspace-for-rajdeep'
           oidc-service-slug: 'bot-wSY1' # Your Service Account slug from the screenshot
+          oidc-audience: 'https://token.actions.githubusercontent.com'
           oidc-auth-only: true
 
       # 2. Login using the dynamic token
