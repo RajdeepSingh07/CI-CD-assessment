@@ -1,28 +1,44 @@
 name: Replicate Cloudsmith Manifest Failure
-on: workflow_dispatch # This lets you run it manually from the UI
+on: workflow_dispatch
+
+# REQUIRED: This block allows GitHub to request the OIDC token from the provider
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   repro-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Login to Cloudsmith
+      # 1. Authenticate using the OIDC Provider "Rajdeep" from your screenshot
+      - name: Authenticate with Cloudsmith via OIDC
+        id: cloudsmith-login
+        uses: cloudsmith-io/cloudsmith-cli-action@v2
+        with:
+          oidc-namespace: 'workspace-for-rajdeep'
+          oidc-service-slug: 'bot-wsy1' # Your Service Account slug from the screenshot
+          oidc-auth-only: true
+
+      # 2. Login using the dynamic token
+      - name: Login to Cloudsmith Docker registry
         uses: docker/login-action@v3
         with:
           registry: docker.cloudsmith.io
-          username: "rajdeep-singh"
-          password: "csa_9633b802283ea4ae6169027db8d319IRNlTQ"
+          username: 'bot-wsy1'
+          password: ${{ steps.cloudsmith-login.outputs.oidc-token }}
 
+      # 3. Trigger the Race Condition
       - name: Force Race Condition
         run: |
           export REPO=docker.cloudsmith.io/workspace-for-rajdeep/docker-test
-          export TAG=ui-repro-FAIL-${{ github.run_id }}
+          export TAG=ui-repro-OIDC-FAIL-${{ github.run_id }}
           export IMAGE=$REPO/backstage:$TAG
 
-          # Pre-pull images so the push happens instantly without 'network pull' time
+          # Pre-pull to eliminate network lag
           docker pull --platform linux/amd64 alpine:latest
           docker pull --platform linux/arm64 alpine:latest
 
-          # RUN THESE IN A SINGLE BURST
+          # Execute the burst
           docker tag alpine:latest $IMAGE-amd64 && \
           docker push $IMAGE-amd64 && \
           docker tag alpine:latest $IMAGE-arm64 && \
