@@ -16,7 +16,7 @@ jobs:
         uses: cloudsmith-io/cloudsmith-cli-action@v2
         with:
           oidc-namespace: 'workspace-for-rajdeep'
-          oidc-service-slug: 'bot-wsy1' # Your Service Account slug from the screenshot
+          oidc-service-slug: 'bot-wSY1' # Your Service Account slug from the screenshot
           oidc-auth-only: true
 
       # 2. Login using the dynamic token
@@ -24,7 +24,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: docker.cloudsmith.io
-          username: 'bot-wsy1'
+          username: 'bot-wSY1'
           password: ${{ steps.cloudsmith-login.outputs.oidc-token }}
 
       # 3. Trigger the Race Condition
